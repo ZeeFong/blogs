@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>添加文章</title>
+    <title>文章修改</title>
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/common.css"/>
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/main.css"/>
     <script type="text/javascript" src="__PUBLIC__/Admin/js/libs/modernizr.min.js"></script>
@@ -20,24 +20,25 @@
     <div class="main-wrap">
 
         <div class="crumb-wrap">
-            <div class="crumb-list"><i class="icon-font"></i><a href="/jscss/admin/design/">首页</a><span class="crumb-step">&gt;</span><a class="crumb-name" href="__MODULE__/Article/lst">文章管理</a><span class="crumb-step">&gt;</span><span>添加文章</span></div>
+            <div class="crumb-list"><i class="icon-font"></i><a href="/jscss/admin/design/">首页</a><span class="crumb-step">&gt;</span><a class="crumb-name" href="__MODULE__/Article/lst">文章管理</a><span class="crumb-step">&gt;</span><span>文章修改</span></div>
         </div>
         <div class="result-wrap">
             <div class="result-content">
                 <form action="" method="post" id="myform" name="myform" enctype="multipart/form-data" >
+                    <input type="hidden" name="id" value="{$articles.id}">
                     <table class="insert-tab" width="100%">
                         <tbody>
                             <tr>
                                 <th><i class="require-red">*</i>文章标题：</th>
                                 <td>
-                                    <input class="common-text required" id="title" name="title" size="30" value="" type="text">
+                                    <input class="common-text required" id="title" name="title" size="30" value="{$articles.title}" type="text">
                                 </td>
                                 
                             </tr>
                             <tr>
                                 <th><i class="require-red">*</i>文章描述：</th>
                                 <td>
-                                    <textarea name="desc" rows="6" cols="50">
+                                    <textarea name="desc" rows="6" cols="50">{$articles.desc}
                                     </textarea>
                                 </td>
                             </tr>
@@ -45,9 +46,9 @@
                                 <th><i class="require-red" >*</i>所属栏目：</th>
                                 <td>
                                     <select name="cateid">
-                                    <option >请选择一个分类</option>
-                                    <volist id="vo" name="flist">
-                                    <option value="{$vo.id}">{$vo.catename}</option>
+                                    <option value=''>请选择栏目</option>
+                                    <volist id="vo" name="cateres">
+                                        <option  <if condition="$vo['id'] eq $articles['cateid']"> selected="selected" </if>  value='{$vo.id}'>{$vo.catename}</option>
                                     </volist>
                                     </select>
                                 </td>
@@ -56,12 +57,17 @@
                                 <th><i class="require-red" >*</i>缩略图：</th>
                                 <td>
                                     <input  type="file" name="pic">
+                                   <if condition="$articles['pic'] neq ''"><img src="__ROOT__{$articles.pic}" height="50">
+                                    <else />
+                                    暂无缩略图
+                                </if>
                                 </td>
                             </tr>
                             <tr>
                                 <th><i class="require-red">*</i>内容：</th>
                                 <td>
                                     <textarea id="content" name="content">
+                                        {$articles.content}
                                     </textarea>
                                 </td>
                             </tr>
